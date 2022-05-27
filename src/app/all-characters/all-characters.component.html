@@ -1,0 +1,154 @@
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-lg-6">
+
+    </div>
+    <div class="col-lg-3">
+      <input class="form-control mr-sm-2" type="text"
+      required name='characterName' id='characterName'
+      placeholder="Search" aria-label="Search" (keyup)="findCharacter($event)">
+    </div>
+    <div class="col-lg-3">
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="container-fluid mt-5" *ngIf="!showSearchResult">
+<h4>Marvel Characters</h4>
+<div class="row">
+  <div
+    class="col-lg-3 mt-3 mb-3"
+    *ngFor="let characters of allCharacters"
+  >
+    <div class="card">
+      <img src="{{characters.thumbnail.path +'/standard_medium.'+characters.thumbnail.extension}}" width="100%" class="card-img-top" alt="Some Issue Loading Image..." />
+      <div class="card-body">
+        <h5 class="card-title">{{ characters.name }}</h5>
+        <button type="button" (click)="fetchComicsByCharacter(characters.id)" class="btn btn-outline-primary  mr-4" data-toggle="modal" data-target=".bd-example-modal-lg">Comics</button>
+        <button type="button" (click)="fetchSeriesByCharacter(characters.id)" class="btn btn-outline-secondary" data-toggle="modal" data-target=".cd-example-modal-lg">Series</button>
+
+      </div>
+    </div>
+
+
+
+
+  </div>
+</div>
+
+</div>
+
+
+<div class="container-fluid mt-5" *ngIf="showSearchResult">
+  <h4>Marvel Characters</h4>
+  <div class="row">
+    <div
+      class="col-lg-3 mt-3 mb-3"
+      *ngFor="let characters of searchedCharacter"
+    >
+      <div class="card">
+        <img src="{{characters.thumbnail.path +'/standard_medium.'+characters.thumbnail.extension}}" width="100%" class="card-img-top" alt="Some Issue Loading Image..." />
+        <div class="card-body">
+          <h5 class="card-title">{{ characters.name }}</h5>
+          <button type="button" (click)="fetchComicsByCharacter(characters.id)" class="btn btn-outline-primary  mr-4" data-toggle="modal" data-target=".bd-example-modal-lg">Comics</button>
+          <button type="button" (click)="fetchSeriesByCharacter(characters.id)" class="btn btn-outline-secondary" data-toggle="modal" data-target=".cd-example-modal-lg">Series</button>
+
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+
+  </div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Comics</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row" *ngIf='showComicsDiv'>
+          <div
+            class="col-lg-3 mt-3 mb-3"
+            *ngFor="let c of comics"
+          >
+            <div class="card">
+              <img src="{{c.thumbnail.path +'/standard_medium.'+c.thumbnail.extension}}" width="100%" class="card-img-top" alt="Some Issue Loading Image..." />
+              <div class="card-body">
+                <h5 class="card-title">{{ c.title }}</h5>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div *ngIf='!showComicsDiv'>
+          <h4> No Comics For this Character </h4>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+    </div>
+
+  </div>
+</div>
+</div>
+
+
+
+<div class="modal fade cd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Series</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="container">
+        <div class="row" *ngIf='showSeriesDiv'>
+          <div
+            class="col-lg-3 mt-3 mb-3"
+            *ngFor="let c of series"
+          >
+            <div class="card">
+              <img src="{{c.thumbnail.path +'/standard_medium.'+c.thumbnail.extension}}" width="100%" class="card-img-top" alt="Some Issue Loading Image..." />
+              <div class="card-body">
+                <h5 class="card-title">{{ c.title }}</h5>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div *ngIf='!showSeriesDiv'>
+          <h4> No Series For this Character </h4>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+    </div>
+
+  </div>
+</div>
+</div>
+
